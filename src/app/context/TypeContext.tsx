@@ -85,7 +85,7 @@ const TypeContextProvider = () => {
             displayedWord = [...displayedWord, extraLetter];
           } else {
             if (originalWord[i] === userTypedWord[i]) {
-              displayedWord = [...displayedWord, originalWord[i]];
+              displayedWord = [...displayedWord, {...originalWord[i],color:Color.GREEN}];
             } else {
               displayedWord = [
                 ...displayedWord,
