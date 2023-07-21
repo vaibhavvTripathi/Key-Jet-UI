@@ -1,6 +1,6 @@
 type Letter = {
      value : string;
-     correct : boolean;
+     isCurrent : boolean;
      color : Color;
 }
 export enum Color {
