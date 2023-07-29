@@ -2,24 +2,26 @@ import { ReactNode, createContext, useContext, useState } from "react";
 import { TypeContext } from "./TypeContext";
 import { Color } from "@/models/Letter";
 import { List } from "@mui/material";
+import Word from "@/models/Word";
 
 export interface ResultContext {
   results: Result[];
-  calculate : (time : number) => void;
+  calculate: (time: number) => void;
 }
 
 export const ResultContext = createContext<ResultContext>({
   results: [],
-  calculate : (time : number) => {}
+  calculate: (time: number) => {},
 });
 
 const ResultProvider = ({ children }: { children: ReactNode }) => {
   const [results, setResults] = useState<Result[]>([]);
 
-  const { OriginalParagraph, UserTypedParagraph, DisplayTypedParagraph } =
-    useContext(TypeContext);
-
-  const calculate = (time: number) => {
+  const calculate = (
+    time: number,
+    DisplayTypedParagraph: Array<Word>,
+    OriginalParagraph: Array<Word>
+  ) => {
     let green = 0;
     let red = 0;
     let maroon = 0;
@@ -43,18 +45,18 @@ const ResultProvider = ({ children }: { children: ReactNode }) => {
     const IncorrectChar = red;
     const MissedChar = grey;
     const Accuracy = (green * 100) / (green + red + grey + maroon);
-    
-    const item : Result = {
-        time : time,
-        wpm : Wpm,
-        rawSpeed : RawSpeed,
-        correctChar : CorrectChar,
-        extraChar : ExtraChar,
-        incorrectChar : IncorrectChar,
-        missedChar : MissedChar,
-        accuracy : Accuracy
-    }
-    setResults([...results, item]); 
+
+    const item: Result = {
+      time: time,
+      wpm: Wpm,
+      rawSpeed: RawSpeed,
+      correctChar: CorrectChar,
+      extraChar: ExtraChar,
+      incorrectChar: IncorrectChar,
+      missedChar: MissedChar,
+      accuracy: Accuracy,
+    };
+    setResults([...results, item]);
   };
 
   const ContextValue = {
