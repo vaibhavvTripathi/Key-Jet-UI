@@ -9,6 +9,7 @@ import { Box, Typography } from "@mui/material";
 
 const para: string = `In this example, an event listener is added to the window object within the component body. Additionally, the same event listener is also passed as an onClick prop to the <button> element. When the component renders, a new event listener is registered on each render, resulting in multiple event listeners for the same event.`;
 export default function Home() {
+
   const {
     HandleKeyDown,
     UserTypedParagraph,
