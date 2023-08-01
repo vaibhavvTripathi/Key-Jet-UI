@@ -6,36 +6,53 @@ import Word from "@/models/Word";
 
 export interface ResultContext {
   results: Result[];
-  calculate: (time: number) => void;
+  calculate: (time: number, DisplayTypeParagraph : Array<Word>) => void;
 }
 
 export const ResultContext = createContext<ResultContext>({
   results: [],
-  calculate: (time: number) => {},
+  calculate: (time: number, DisplayTypeParagraph : Array<Word>) => {},
 });
 
 const ResultProvider = ({ children }: { children: ReactNode }) => {
   const [results, setResults] = useState<Result[]>([]);
 
-  const calculate = (
-    time: number,
-    DisplayTypedParagraph: Array<Word>,
-    OriginalParagraph: Array<Word>
-  ) => {
+  const calculate = (time: number, DisplayTypedParagraph: Array<Word>) => {
     let green = 0;
     let red = 0;
     let maroon = 0;
     let grey = 0;
     let correctlyTypedChar = 0;
-    for (let i = 0; i < DisplayTypedParagraph.length; i++) {
-      if (DisplayTypedParagraph[i] === OriginalParagraph[i]) {
-        correctlyTypedChar += OriginalParagraph[i].length;
+    
+    for (const word of DisplayTypedParagraph) {
+      let flag = true;
+      let greenCount = 0;
+      for (const char of word) {
+        if (char.isCurrent) {
+          flag = false;
+          break;
+        }
+        switch (char.color) {
+          case Color.GREEN:
+            green++;
+            greenCount++;
+            break;
+          case Color.RED:
+            red++;
+            break;
+          case Color.GREY:
+            grey++;
+            break;
+          case Color.MAROON:
+            maroon++;
+            break;
+          default:
+            break;
+        }
       }
-      for (let j = 0; j < DisplayTypedParagraph[i].length; j++) {
-        if (DisplayTypedParagraph[i][j].color === Color.GREEN) green++;
-        if (DisplayTypedParagraph[i][j].color === Color.RED) red++;
-        if (DisplayTypedParagraph[i][j].color === Color.GREY) grey++;
-        if (DisplayTypedParagraph[i][j].color === Color.MAROON) maroon++;
+
+      if (flag && greenCount === word.length) {
+        correctlyTypedChar += word.length;
       }
     }
     const Wpm = (correctlyTypedChar / (5 * time)) * 60;
