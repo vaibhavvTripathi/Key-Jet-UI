@@ -18,7 +18,7 @@ const WordVal = ({ letters }: { letters: Array<Letter> }) => {
               fontFamily: "'Ubuntu', sans-serif",
               
               color: COLOR.get(letter.color),
-              borderRight: letter.isCurrent&&isVisible ? "1px solid grey" : "none",
+              borderRight: letter.isCurrent ? "1px solid grey" : "none",
               mr:"3px"
             }}
             variant="h5"
