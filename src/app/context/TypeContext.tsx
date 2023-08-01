@@ -39,7 +39,7 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
         const letter: Letter = {
           value: char,
           isCurrent: false,
-          color: Color.BLUE,
+          color: Color.GREY,
         };
         letters.push(letter);
       }
@@ -102,7 +102,7 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
             });
             const letter: Letter = {
               value: keyInput,
-              color: Color.BLUE,
+              color: Color.GREY,
               isCurrent: true,
             };
 
@@ -183,7 +183,7 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
         for (let j = 0; j < word.length; j++) {
           const letter = word[j];
 
-          if (letter.color === Color.BLUE) {
+          if (letter.color === Color.GREY) {
             letter.isCurrent = true;
             innerFlag = false;
             break;
