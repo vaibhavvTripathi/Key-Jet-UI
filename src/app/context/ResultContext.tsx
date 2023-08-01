@@ -6,24 +6,24 @@ import Word from "@/models/Word";
 
 export interface ResultContext {
   results: Result[];
-  calculate: (time: number, DisplayTypeParagraph : Array<Word>) => void;
+  calculate: (time: number, DisplayTypeParagraph: Array<Word>) => void;
 }
 
 export const ResultContext = createContext<ResultContext>({
   results: [],
-  calculate: (time: number, DisplayTypeParagraph : Array<Word>) => {},
+  calculate: (time: number, DisplayTypeParagraph: Array<Word>) => {},
 });
 
 const ResultProvider = ({ children }: { children: ReactNode }) => {
   const [results, setResults] = useState<Result[]>([]);
-
+  console.log(results);
   const calculate = (time: number, DisplayTypedParagraph: Array<Word>) => {
     let green = 0;
     let red = 0;
     let maroon = 0;
     let grey = 0;
     let correctlyTypedChar = 0;
-    
+
     for (const word of DisplayTypedParagraph) {
       let flag = true;
       let greenCount = 0;
@@ -87,3 +87,5 @@ const ResultProvider = ({ children }: { children: ReactNode }) => {
     </ResultContext.Provider>
   );
 };
+
+export default ResultProvider;
