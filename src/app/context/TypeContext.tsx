@@ -54,28 +54,40 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const HandleKeyDown = (e: KeyboardEvent) => {
-    if (OriginalParagraph.length < UserTypedParagraph.length) {
-      return;
-    }
-
     const keyInput: string = e.key;
 
     if (keyInput === " ") {
+      if (OriginalParagraph.length < UserTypedParagraph.length) {
+        return;
+      }
       const updatedUserTypedParagraph: Array<Word> = UserTypedParagraph.map(
         (word, index) => {
           if (index < UserTypedParagraph.length - 1) {
             return word;
           } else {
-            return word.map((letter, index) => {
-              if (index < word.length - 1) {
-                return letter;
+            let newWord: Word = [];
+            const originalWord = OriginalParagraph[index];
+            for (
+              let i = 0;
+              i < Math.max(word.length, originalWord.length);
+              i++
+            ) {
+              if (i < word.length - 1) {
+                newWord = [...newWord, word[i]];
+              } else if (i === word.length - 1) {
+                newWord = [...newWord, { ...word[i], isCurrent: false }];
               } else {
-                return { ...letter, isCurrent: false };
+                newWord = [
+                  ...newWord,
+                  { ...originalWord[i], color: Color.MAROON },
+                ];
               }
-            });
+            }
+            return newWord;
           }
         }
       );
+
       const newArray = [...updatedUserTypedParagraph, []];
       setUserTypedParagraph(newArray);
       updateDisplayParagraph(newArray);
@@ -104,7 +116,6 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  console.log(UserTypedParagraph[0], DisplayTypedParagraph[0]);
   const updateDisplayParagraph = (UserTypedParagraph: Array<Word>) => {
     const updatedDisplayParagraph: Array<Word> = OriginalParagraph.map(
       (word, index) => {
@@ -124,7 +135,6 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
           if (i >= userTypedWord.length) {
             displayedWord = [...displayedWord, originalWord[i]];
           } else if (i >= originalWord.length) {
-            console.log(userTypedWord[i]);
             const extraLetter: Letter = {
               ...userTypedWord[i],
               color: Color.RED,
@@ -134,12 +144,23 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
             if (originalWord[i].value === userTypedWord[i].value) {
               displayedWord = [
                 ...displayedWord,
-                { ...originalWord[i],isCurrent:userTypedWord[i].isCurrent, color: Color.GREEN },
+                {
+                  ...originalWord[i],
+                  isCurrent: userTypedWord[i].isCurrent,
+                  color:
+                    userTypedWord[i].color === Color.MAROON
+                      ? Color.MAROON
+                      : Color.GREEN,
+                },
               ];
             } else {
               displayedWord = [
                 ...displayedWord,
-                { ...originalWord[i],isCurrent:userTypedWord[i].isCurrent, color: Color.RED },
+                {
+                  ...originalWord[i],
+                  isCurrent: userTypedWord[i].isCurrent,
+                  color: Color.RED,
+                },
               ];
             }
           }
@@ -147,17 +168,50 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
         return displayedWord;
       }
     );
+    let flag = true;
+    for (let i = 0; i < updatedDisplayParagraph.length; i++) {
+      for (let j = 0; j < updatedDisplayParagraph[i].length; j++) {
+        if (updatedDisplayParagraph[i][j].isCurrent) {
+          flag = false;
+        }
+      }
+    }
+    if (flag) {
+      for (let i = 0; i < updatedDisplayParagraph.length; i++) {
+        const word = updatedDisplayParagraph[i];
+        let innerFlag = true;
+        for (let j = 0; j < word.length; j++) {
+          const letter = word[j];
+
+          if (letter.color === Color.BLUE) {
+            letter.isCurrent = true;
+            innerFlag = false;
+            break;
+          }
+        }
+        if (!innerFlag) {
+          break;
+        }
+      }
+    }
     setDisplayTypedParagraph(updatedDisplayParagraph);
   };
-
+ console.log(UserTypedParagraph);
   const HandleBackspace = () => {
     let updatedUserTypedParagraph: Array<Word> = [];
+    let flag: boolean = false;
     UserTypedParagraph.forEach((word, index) => {
       console.log(UserTypedParagraph.length);
       if (index < UserTypedParagraph.length - 1) {
         updatedUserTypedParagraph = [...updatedUserTypedParagraph, word];
       } else {
-        if (word.length !== 0) {
+        if(word.length==0) {
+          flag = true;
+        }
+        else if (word.length !== 0) {
+          if (word.length == 1) {
+            flag = true;
+          }
           let newWord = word.filter((letter, index) => {
             return index < word.length - 1;
           });
@@ -172,10 +226,21 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
         }
       }
     });
+    if (flag) {
+      updatedUserTypedParagraph.forEach((word, index) => {
+        if (index === updatedUserTypedParagraph.length - 1) {
+          word.forEach((letter, idx) => {
+            if (idx === word.length - 1) {
+              letter.isCurrent = true;
+            }
+          });
+        }
+      });
+    }
     if (updatedUserTypedParagraph.length === 0) {
       updatedUserTypedParagraph = [[]];
     }
-    console.log(updatedUserTypedParagraph);
+    console.log("->", updatedUserTypedParagraph);
     setUserTypedParagraph(updatedUserTypedParagraph);
     updateDisplayParagraph(updatedUserTypedParagraph);
   };

@@ -1,22 +1,27 @@
 import Letter, { Color } from "@/models/Letter";
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const WordVal = ({ letters }: { letters: Array<Letter> }) => {
   const COLOR = new Map<Color, string>();
   COLOR.set(Color.BLUE, "grey");
   COLOR.set(Color.GREEN, "green");
   COLOR.set(Color.RED, "red");
+  COLOR.set(Color.MAROON,"#EA906C")
+  
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap" }}>
       {letters.map((letter, index) => {
         return (
           <Typography
             sx={{
+              fontFamily: "'Ubuntu', sans-serif",
+              
               color: COLOR.get(letter.color),
-              textDecoration: letter.isCurrent ? "underline" : "none",
+              borderRight: letter.isCurrent&&isVisible ? "1px solid grey" : "none",
+              mr:"3px"
             }}
-            variant="h6"
+            variant="h5"
             key={index}
           >
             {letter.value}
