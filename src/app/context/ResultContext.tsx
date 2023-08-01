@@ -50,7 +50,6 @@ const ResultProvider = ({ children }: { children: ReactNode }) => {
             break;
         }
       }
-
       if (flag && greenCount === word.length) {
         correctlyTypedChar += word.length;
       }

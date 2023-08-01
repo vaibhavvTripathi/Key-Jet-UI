@@ -2,7 +2,8 @@
 import { Box, Container, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { ResultContext } from "../context/ResultContext";
-import SimpleLineChart from "../../components/page";
+import SimpleLineChart from "../../components/LineChart";
+
 
 const Page = () => {
   const x = [1, 5, 3, 7, 10, 34, 37, 40, 50, 70];

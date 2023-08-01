@@ -1,8 +1,6 @@
 'use client'
 import * as React from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
-
-
 type Props = {
     wpm : Array<number>
     raw : Array<number>

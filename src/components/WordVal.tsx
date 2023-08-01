@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 const WordVal = ({ letters }: { letters: Array<Letter> }) => {
   const COLOR = new Map<Color, string>();
-  COLOR.set(Color.BLUE, "grey");
+  COLOR.set(Color.GREY, "grey");
   COLOR.set(Color.GREEN, "green");
   COLOR.set(Color.RED, "red");
   COLOR.set(Color.MAROON,"#EA906C")
@@ -18,8 +18,8 @@ const WordVal = ({ letters }: { letters: Array<Letter> }) => {
               fontFamily: "'Ubuntu', sans-serif",
               
               color: COLOR.get(letter.color),
-              borderRight: (letter.isCurrent && letter.color !== Color.BLUE) ? "1px solid grey" : "none",
-              borderLeft: (letter.isCurrent && letter.color === Color.BLUE) ? "1px solid grey" : "none",
+              borderRight: (letter.isCurrent && letter.color !== Color.GREY) ? "1px solid grey" : "none",
+              borderLeft: (letter.isCurrent && letter.color === Color.GREY) ? "1px solid grey" : "none",
               mr:"3px"
             }}
             variant="h5"

@@ -6,7 +6,7 @@ type Letter = {
 export enum Color {
      RED = 0,
      GREEN = 1,
-     BLUE = 2,
+     GREY = 2,
      MAROON = 3,
      GREY = 4,
 }
