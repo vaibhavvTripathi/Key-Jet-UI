@@ -93,7 +93,7 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
       updateDisplayParagraph(newArray);
     } else if (keyInput === "Backspace") {
       HandleBackspace();
-    } else if (keyInput !== "CapsLock") {
+    } else if (keyInput !== "CapsLock" && keyInput !== "Shift") {
       const updatedArray: Array<Array<Letter>> = UserTypedParagraph.map(
         (word, index) => {
           if (index === UserTypedParagraph.length - 1) {
