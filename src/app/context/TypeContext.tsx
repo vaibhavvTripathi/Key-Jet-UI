@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 
 const quote: string =
-  "Embrace each day with a smile, for life's beauty lies in the simplest moments. Let kindness be your compass, guiding you to brighter paths. In unity, we find strength, and in love, we discover endless possibilities.";
+  "become must head into order for should about lead find face stand never man when work day say against plan word time use general few through day up into hand you which there out which open under interest this still move little leave at it where";
 export interface TypeContextType {
   OriginalParagraph: Array<Word>;
   UserTypedParagraph: Array<Word>;

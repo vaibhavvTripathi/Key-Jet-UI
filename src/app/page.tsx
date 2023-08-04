@@ -9,7 +9,7 @@ import { Box, Typography } from "@mui/material";
 import { ResultContext } from "./context/ResultContext";
 import { useRouter } from "next/navigation";
 
-const para: string = `In this example, an event listener is added to the window object within the component body. Additionally, the same event listener is also passed as an onClick prop to the <button> element. When the component renders, a new event listener is registered on each render, resulting in multiple event listeners for the same event.`;
+const para: string = `become must head into order for should about lead find face stand never man when work day say against plan word time use general few through day up into hand you which there out which open under interest this still move little leave at it where`;
 export default function Home() {
   const {
     HandleKeyDown,
@@ -25,7 +25,7 @@ export default function Home() {
  
   useEffect(() => {
     if (!hasStarted) return;
-    if(timeCount===30) {
+    if(timeCount===30 || UserTypedParagraph.length > OriginalParagraph.length) {
       router.push("/results");
       return;
     }

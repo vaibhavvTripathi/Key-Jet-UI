@@ -52,15 +52,17 @@ const ResultProvider = ({ children }: { children: ReactNode }) => {
       }
       if (flag && greenCount === word.length) {
         correctlyTypedChar += word.length;
+        correctlyTypedChar ++;
+        green++;
       }
     }
-    const Wpm = (correctlyTypedChar / (5 * time)) * 60;
-    const RawSpeed = ((red + green) / (5 * time)) * 60;
+    const Wpm = Math.round((correctlyTypedChar / (5 * time)) * 60);
+    const RawSpeed = Math.round(((red + green) / (5 * time)) * 60);
     const CorrectChar = green;
     const ExtraChar = maroon;
     const IncorrectChar = red;
     const MissedChar = grey;
-    const Accuracy = (green * 100) / (green + red + grey + maroon);
+    const Accuracy = Math.round((green * 100) / (green + red + grey + maroon));
 
     const item: Result = {
       time: time,
@@ -72,7 +74,7 @@ const ResultProvider = ({ children }: { children: ReactNode }) => {
       missedChar: MissedChar,
       accuracy: Accuracy,
     };
-    setResults([...results, item]);
+    if(time != 0) setResults([...results, item]);
   };
 
   const ContextValue = {

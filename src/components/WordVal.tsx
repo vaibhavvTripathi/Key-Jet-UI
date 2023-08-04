@@ -5,12 +5,12 @@ import React, { useEffect, useState } from "react";
 const WordVal = ({ letters }: { letters: Array<Letter> }) => {
   const COLOR = new Map<Color, string>();
   COLOR.set(Color.GREY, "grey");
-  COLOR.set(Color.GREEN, "green");
+  COLOR.set(Color.GREEN, "lightgreen");
   COLOR.set(Color.RED, "red");
   COLOR.set(Color.MAROON,"#EA906C")
   
   return (
-    <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+    <Box sx={{ display: "flex", flexWrap: "wrap"}}>
       {letters.map((letter, index) => {
         return (
           <Typography

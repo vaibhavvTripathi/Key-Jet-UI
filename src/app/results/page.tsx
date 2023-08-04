@@ -4,12 +4,21 @@ import React, { useContext } from "react";
 import { ResultContext } from "../context/ResultContext";
 import SimpleLineChart from "../../components/LineChart";
 
-
 const Page = () => {
-  const x = [1, 5, 3, 7, 10, 34, 37, 40, 50, 70];
-  const y = [5, 4, 8, 20, 50, 40, 57, 65, 70, 99];
-  const time = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  // const x = [1, 5, 3, 7, 10, 34, 37, 40, 50, 70];
+  // const y = [5, 4, 8, 20, 50, 40, 57, 65, 70, 99];
+  // const time = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const { results } = useContext(ResultContext);
+  let x = [0];
+  let y = [0];
+  let time = [0];
+  if (results.length > 0) {
+    x = results?.map((result) => result?.wpm);
+    y = results?.map((result) => result?.rawSpeed);
+    time = results?.map((result) => result?.time);
+  }
+
+  console.log(x, y, time);
   const finalResult: Result =
     results.length != 0
       ? results[results.length - 1]
