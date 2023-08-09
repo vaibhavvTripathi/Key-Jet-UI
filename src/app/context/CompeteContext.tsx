@@ -3,18 +3,21 @@ import { TypeContext } from "./TypeContext";
 import { Color } from "@/models/Letter";
 import { List } from "@mui/material";
 import Word from "@/models/Word";
+import io  from "socket.io-client";
 
-export interface ResultContext {
+export interface CompeteContext {
   results: Result[];
   calculate: (time: number, DisplayTypeParagraph: Array<Word>) => void;
 }
 
-export const ResultContext = createContext<ResultContext>({
+const socket = io("http://localhost:8000")
+
+export const CompeteContext = createContext<CompeteContext>({
   results: [],
   calculate: (time: number, DisplayTypeParagraph: Array<Word>) => {},
 });
 
-const ResultProvider = ({ children }: { children: ReactNode }) => {
+const CompetitionProvider = ({ children }: { children: ReactNode }) => {
   const [results, setResults] = useState<Result[]>([]);
   const calculate = (time: number, DisplayTypedParagraph: Array<Word>) => {
     let green = 0;
@@ -73,7 +76,7 @@ const ResultProvider = ({ children }: { children: ReactNode }) => {
       missedChar: MissedChar,
       accuracy: Accuracy,
     };
-    if(time != 0) setResults([...results, item]);
+    socket.emit("send_result",item)
   };
 
   const ContextValue = {
@@ -82,10 +85,10 @@ const ResultProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <ResultContext.Provider value={ContextValue}>
+    <CompeteContext.Provider value={ContextValue}>
       {children}
-    </ResultContext.Provider>
+    </CompeteContext.Provider>
   );
 };
 
-export default ResultProvider;
+export default CompetitionProvider;
