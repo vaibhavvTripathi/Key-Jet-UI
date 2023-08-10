@@ -3,14 +3,14 @@ import { TypeContext } from "./TypeContext";
 import { Color } from "@/models/Letter";
 import { List } from "@mui/material";
 import Word from "@/models/Word";
-import io  from "socket.io-client";
+import io from "socket.io-client";
 
 export interface CompeteContext {
   results: Result[];
   calculate: (time: number, DisplayTypeParagraph: Array<Word>) => void;
 }
 
-const socket = io("http://localhost:8000")
+const socket = io("http://localhost:8000");
 
 export const CompeteContext = createContext<CompeteContext>({
   results: [],
@@ -19,6 +19,28 @@ export const CompeteContext = createContext<CompeteContext>({
 
 const CompetitionProvider = ({ children }: { children: ReactNode }) => {
   const [results, setResults] = useState<Result[]>([]);
+
+  const createRoom = () => {
+    socket.emit("create_room", {
+      userId: sessionStorage.getItem("userId"),
+    });
+  };
+
+  const joinRoom = () => {
+    socket.emit("join_room", {
+      roomId: sessionStorage.getItem("roomId"),
+      userId: sessionStorage.getItem("userId"),
+    });
+  };
+
+  socket.on("get_room_id", (data) => {
+    sessionStorage.setItem("roomId", data.id);
+  });
+
+  socket.on("handle_error", (data) => {
+    alert(data.message);
+  });
+
   const calculate = (time: number, DisplayTypedParagraph: Array<Word>) => {
     let green = 0;
     let red = 0;
@@ -54,7 +76,7 @@ const CompetitionProvider = ({ children }: { children: ReactNode }) => {
       }
       if (flag && greenCount === word.length) {
         correctlyTypedChar += word.length;
-        correctlyTypedChar ++;
+        correctlyTypedChar++;
         green++;
       }
     }
@@ -66,7 +88,7 @@ const CompetitionProvider = ({ children }: { children: ReactNode }) => {
     const MissedChar = grey;
     const Accuracy = Math.round((green * 100) / (green + red + grey + maroon));
 
-    const item: Result = {
+    const item = {
       time: time,
       wpm: Wpm,
       rawSpeed: RawSpeed,
@@ -75,8 +97,10 @@ const CompetitionProvider = ({ children }: { children: ReactNode }) => {
       incorrectChar: IncorrectChar,
       missedChar: MissedChar,
       accuracy: Accuracy,
+    roomId : sessionStorage.getItem("roomId"),
+    userId : sessionStorage.getItem("userId")
     };
-    socket.emit("send_result",item)
+    socket.emit("get_race_data", item);
   };
 
   const ContextValue = {

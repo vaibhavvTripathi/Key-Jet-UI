@@ -17,7 +17,6 @@ const WordVal = ({ letters }: { letters: Array<Letter> }) => {
           <Typography
             sx={{
               fontFamily: "'Ubuntu', sans-serif",
-              
               color: COLOR.get(letter.color),
               borderRight: (letter.isCurrent && letter.color !== Color.GREY) ? "1px solid grey" : "none",
               borderLeft: (letter.isCurrent && letter.color === Color.GREY) ? "1px solid grey" : "none",
