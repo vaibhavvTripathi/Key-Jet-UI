@@ -75,8 +75,8 @@ export default function Home() {
         <Typography variant="h5" sx={{ color: "grey", fontWeight: 600 }}>
           {timeCount}
         </Typography>
-        <Button variant="outlined" onClick={toggleColorMode}>
-          <DarkModeIcon sx={{color: 'neutral.main'}} />
+        <Button variant="contained" color="secondary" onClick={toggleColorMode}>
+          <DarkModeIcon />
         </Button>
         <Box
           sx={{
