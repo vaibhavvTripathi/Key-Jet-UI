@@ -61,7 +61,7 @@ const ResultProvider = ({ children }: { children: ReactNode }) => {
     const ExtraChar = maroon;
     const IncorrectChar = red;
     const MissedChar = grey;
-    const Accuracy = Math.round((green * 100) / (green + red + grey + maroon));
+    const Accuracy = Math.round((green * 100) / (green + red + maroon));
 
     const item: Result = {
       time: time,
