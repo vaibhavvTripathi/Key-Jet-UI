@@ -46,14 +46,16 @@ const Navbar = () => {
         <Typography variant="h2" sx={{ fontFamily: "'Ubuntu', sans-serif" }}>
           {name.split("").map((item, index) => {
             return (
-              <span key={index}>
+              <span
+                key={index}
+                style={{
+                  textDecoration:
+                    isUnderline && index == name.length - 1
+                      ? "underline"
+                      : "none",
+                }}
+              >
                 {item}
-                {index === name.length - 1 && isUnderline && (
-                  <span
-                  >
-                  _
-                  </span>
-                )}
               </span>
             );
           })}
