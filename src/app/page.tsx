@@ -5,11 +5,11 @@ import { green } from "@mui/material/colors";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { TypeContext } from "./context/TypeContext";
 import WordVal from "@/components/WordVal";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { ResultContext } from "./context/ResultContext";
 import { useRouter } from "next/navigation";
 import { ColorModeContext } from "@/theme";
-import RefreshIcon from "@mui/icons-material/Refresh";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 
 const para: string = `become must head into order for should about lead find face stand never man when work day say against plan word time use general few through day up into hand you which there out which open under interest this still move little leave at it where`;
 export default function Home() {
@@ -58,22 +58,24 @@ export default function Home() {
 
   return (
     <>
+      <Typography variant="h4" sx={{ textAlign: "center", mb: 3, mt: 10 }}>
+        Press Any Key to Start
+      </Typography>
+
       <Box
         sx={{
           display: "flex",
           gap: 2,
           p: 2,
           flexWrap: "wrap",
-          mt: 5,
+          width: "70%",
           mx: "auto",
         }}
       >
-        <Typography variant="h3" sx={{ color: "grey", fontWeight: 600 }}>
+        <Typography variant="h5" sx={{ color: "grey", fontWeight: 600 }}>
           {timeCount}
         </Typography>
-        <Button variant="contained" color="secondary" onClick={toggleColorMode}>
-          <DarkModeIcon />
-        </Button>
+
         <Box
           sx={{
             display: "flex",
@@ -88,23 +90,6 @@ export default function Home() {
               </Box>
             );
           })}
-        </Box>
-        <Box sx={{ width: "100%" }}>
-          <IconButton sx={{ mx: "auto", display: "block" }}>
-            <RefreshIcon />
-          </IconButton>
-          <Typography
-            variant="h4"
-            sx={{
-              textAlign: "center",
-              mb: 3,
-              color: "text1.main",
-              width: "100%",
-              
-            }}
-          >
-            Press Any Key to Start
-          </Typography>
         </Box>
       </Box>
     </>

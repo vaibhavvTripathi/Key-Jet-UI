@@ -1,13 +1,15 @@
 import { Box, IconButton, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import BoltIcon from "@mui/icons-material/Bolt";
 import { sleep } from "../../utills/sleep";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import GroupsIcon from "@mui/icons-material/Groups";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { ColorModeContext } from "@/theme";
 
 const Navbar = () => {
   const [isUnderline, setIsUnderline] = useState<boolean>(false);
+  const { mode, toggleColorMode } = useContext(ColorModeContext);
   const name = "Key Jet";
   useEffect(() => {
     const timer = setInterval(() => {
@@ -35,23 +37,23 @@ const Navbar = () => {
         }}
       >
         <BoltIcon
-          sx={{ fontSize: "2.5em", color: "tex1.dark",filter: 'drop-shadow(0 0 5px) brightness(150%)'}}
+          sx={{
+            fontSize: "2.5em",
+            color: "tex1.dark",
+            filter: "drop-shadow(0 0 5px) brightness(150%)",
+          }}
         />
         <Typography variant="h2" sx={{ fontFamily: "'Ubuntu', sans-serif" }}>
           {name.split("").map((item, index) => {
             return (
-              <span
-                key={index}
-
-                style={{
-                  textDecoration:
-                    isUnderline && index == name.length - 1
-                      ? "underline"
-                      : "none",
-                      
-                }}
-              >
+              <span key={index}>
                 {item}
+                {index === name.length - 1 && isUnderline && (
+                  <span
+                  >
+                  _
+                  </span>
+                )}
               </span>
             );
           })}
@@ -63,17 +65,16 @@ const Navbar = () => {
           border: "1px solid ",
           borderColor: "text3.light",
           borderRadius: "10px",
-          px: 1
-          
+          px: 1,
         }}
       >
         <IconButton>
-          <SettingsIcon sx={{ color: "text3.light"}} />
+          <SettingsIcon sx={{ color: "text3.light" }} />
         </IconButton>
         <IconButton>
           <GroupsIcon sx={{ color: "text3.light" }} />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={toggleColorMode}>
           <DarkModeIcon sx={{ color: "text3.light" }} />
         </IconButton>
       </Box>
