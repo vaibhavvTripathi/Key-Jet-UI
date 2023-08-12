@@ -10,6 +10,7 @@ import { ResultContext } from "./context/ResultContext";
 import { useRouter } from "next/navigation";
 import { ColorModeContext } from "@/theme";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
+import CompeteGraph from "./compete/page";
 
 const para: string = `become must head into order for should about lead find face stand never man when work day say against plan word time use general few through day up into hand you which there out which open under interest this still move little leave at it where`;
 export default function Home() {
@@ -58,9 +59,10 @@ export default function Home() {
 
   return (
     <>
-      <Typography variant="h4" sx={{ textAlign: "center", mb: 3, mt: 10 }}>
+      <CompeteGraph />
+      {/* <Typography variant="h4" sx={{ textAlign: "center", mb: 3, mt: 10 }}>
         Press Any Key to Start
-      </Typography>
+      </Typography> */}
 
       <Box
         sx={{

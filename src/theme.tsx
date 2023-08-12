@@ -211,21 +211,22 @@ export const themeSettings = (mode: any) => {
 
 export const ColorModeContext = createContext<{
   toggleColorMode: () => void;
-  mode : string;
+  mode: string;
 }>({
   toggleColorMode: () => {},
-  mode : 'light',
+  mode: "dark",
 });
 
-export const useMode = (): [Theme, { toggleColorMode: () => void }] => {
+export const useMode = (): [Theme, { toggleColorMode: () => void, mode : string }] => {
   const [mode, setMode] = useState("dark");
 
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () =>
         setMode((prev) => (prev === "light" ? "dark" : "light")),
+      mode,
     }),
-    []
+    [mode]
   );
 
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
