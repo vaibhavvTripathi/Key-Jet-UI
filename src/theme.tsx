@@ -29,15 +29,15 @@ export const tokens = (mode: string) => ({
           900: "#201d29",
         },
         greyAccent: {
-          100: "#e6e6e6",
+          100: "#e5e5e5",
           200: "#cccccc",
-          300: "#b3b3b3",
+          300: "#b2b2b2",
           400: "#999999",
-          500: "#808080",
+          500: "#7f7f7f",
           600: "#666666",
-          700: "#4d4d4d",
+          700: "#4c4c4c",
           800: "#333333",
-          900: "#1a1a1a",
+          900: "#191919",
         },
 
         redAccent: {
@@ -88,15 +88,15 @@ export const tokens = (mode: string) => ({
           900: "#ece9f5",
         },
         greyAccent: {
-          100: "#1a1a1a",
+          100: "#191919",
           200: "#333333",
-          300: "#4d4d4d",
+          300: "#4c4c4c",
           400: "#666666",
-          500: "#808080",
+          500: "#7f7f7f",
           600: "#999999",
-          700: "#b3b3b3",
+          700: "#b2b2b2",
           800: "#cccccc",
-          900: "#e6e6e6",
+          900: "#e5e5e5",
         },
         redAccent: {
           100: "#230e12",
@@ -217,7 +217,10 @@ export const ColorModeContext = createContext<{
   mode: "dark",
 });
 
-export const useMode = (): [Theme, { toggleColorMode: () => void, mode : string }] => {
+export const useMode = (): [
+  Theme,
+  { toggleColorMode: () => void; mode: string }
+] => {
   const [mode, setMode] = useState("dark");
 
   const colorMode = useMemo(

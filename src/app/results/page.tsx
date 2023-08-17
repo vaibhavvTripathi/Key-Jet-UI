@@ -5,9 +5,6 @@ import { ResultContext } from "../context/ResultContext";
 import SimpleLineChart from "../../components/LineChart";
 
 const Page = () => {
-  // const x = [1, 5, 3, 7, 10, 34, 37, 40, 50, 70];
-  // const y = [5, 4, 8, 20, 50, 40, 57, 65, 70, 99];
-  // const time = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const { results } = useContext(ResultContext);
   let x = [0];
   let y = [0];
@@ -47,16 +44,16 @@ const Page = () => {
         }}
       >
         <Box>
-          <Typography variant="h6">wpm</Typography>
-          <Typography variant="h2">{finalResult.wpm}</Typography>
+          <Typography variant="h2">wpm</Typography>
+          <Typography variant="h1">{finalResult.wpm}</Typography>
         </Box>
         <Box>
-          <Typography variant="h6">acc</Typography>
-          <Typography variant="h2">{`${finalResult.accuracy}%`}</Typography>
+          <Typography variant="h2">acc</Typography>
+          <Typography variant="h1">{`${finalResult.accuracy}%`}</Typography>
         </Box>
         <Box paddingTop={"1em"}>
           <Typography variant="body1">test type</Typography>
-          <Typography variant="h6">english 10k</Typography>
+          <Typography variant="h4">english 10k</Typography>
         </Box>
       </Container>
       <Container>
@@ -69,19 +66,19 @@ const Page = () => {
           }}
         >
           <Box>
-            <Typography variant="h6">raw</Typography>
+            <Typography variant="h4">raw</Typography>
             <Typography variant="h4">{finalResult.rawSpeed}</Typography>
           </Box>
           <Box>
-            <Typography variant="h6">characters</Typography>
+            <Typography variant="h4">characters</Typography>
             <Typography variant="h4">{`${finalResult.correctChar}/${finalResult.incorrectChar}/${finalResult.extraChar}/${finalResult.missedChar}`}</Typography>
           </Box>
           <Box>
-            <Typography variant="h6">consistency</Typography>
+            <Typography variant="h4">consistency</Typography>
             <Typography variant="h4">89</Typography>
           </Box>
           <Box>
-            <Typography variant="h6">time</Typography>
+            <Typography variant="h4">time</Typography>
             <Typography variant="h4">{finalResult.time}</Typography>
           </Box>
         </Container>
