@@ -178,7 +178,7 @@ function CompeteGraph() {
   };
 
   return (
-    <Container sx={{ marginTop: "20px", textAlign: "center" }}>
+    <Container sx={{ marginTop: "20px", textAlign: "center"}}>
       <Paper
         elevation={2}
         style={{
