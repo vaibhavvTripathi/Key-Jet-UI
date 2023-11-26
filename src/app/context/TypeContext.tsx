@@ -2,9 +2,11 @@ import Letter, { Color } from "@/models/Letter";
 import Word from "@/models/Word";
 import React, { useEffect, useState } from "react";
 import { createContext } from "react";
-
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import path from "path";
 const quote: string =
-  "become must head into order for should about lead find face stand never man when work day say against plan word time use general few through day up into hand you which there out which open under interest this still move little leave at it where";
+  "become must head into order for should about lead find face stand never man when work day say against plan word time use general few through day up into hand you which there out which open under interest this still move little leave at it where";
 export interface TypeContextType {
   OriginalParagraph: Array<Word>;
   UserTypedParagraph: Array<Word>;
@@ -29,6 +31,13 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
     Array<Word>
   >([[]]);
 
+  const pathname = usePathname();
+
+  useEffect(() => {
+    console.log("rendering");
+  }, [pathname]);
+  console.log(UserTypedParagraph);
+  // useEffect(()=> {setUserTypedParagraph()},[])
   function convertStringToLetterArray(inputString: string): Array<Word> {
     const words = inputString.split(" ");
     const letterArray: Array<Word> = [];
@@ -50,8 +59,9 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   useEffect(() => {
+    setUserTypedParagraph([[]]);
     updateDisplayParagraph(UserTypedParagraph);
-  }, []);
+  }, [pathname]);
 
   const HandleKeyDown = (e: KeyboardEvent) => {
     const keyInput: string = e.key;
@@ -196,7 +206,7 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
     setDisplayTypedParagraph(updatedDisplayParagraph);
   };
- console.log(UserTypedParagraph);
+  console.log(UserTypedParagraph);
   const HandleBackspace = () => {
     let updatedUserTypedParagraph: Array<Word> = [];
     let flag: boolean = false;
@@ -205,10 +215,9 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
       if (index < UserTypedParagraph.length - 1) {
         updatedUserTypedParagraph = [...updatedUserTypedParagraph, word];
       } else {
-        if(word.length==0) {
+        if (word.length == 0) {
           flag = true;
-        }
-        else if (word.length !== 0) {
+        } else if (word.length !== 0) {
           if (word.length == 1) {
             flag = true;
           }

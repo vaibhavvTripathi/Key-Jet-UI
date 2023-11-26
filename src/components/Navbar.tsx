@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import BoltIcon from "@mui/icons-material/Bolt";
 import { sleep } from "../../utills/sleep";
@@ -6,10 +6,19 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import GroupsIcon from "@mui/icons-material/Groups";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { ColorModeContext } from "@/theme";
+import Link from "next/link";
+import { useTheme } from "@mui/material";
+import { tokens } from "@/theme";
+import { usePathname, useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [isUnderline, setIsUnderline] = useState<boolean>(false);
   const { mode, toggleColorMode } = useContext(ColorModeContext);
+  const theme = useTheme();
+  const color = tokens(theme.palette.mode);
+
+  const router = useRouter();
+  const pathname = usePathname();
   const name = "Key Jet";
   useEffect(() => {
     const timer = setInterval(() => {
@@ -60,6 +69,42 @@ const Navbar = () => {
             );
           })}
         </Typography>
+      </Box>
+      <Box
+        sx={{
+          ml: 8,
+          borderRadius: "10px",
+          display: "flex",
+        }}
+      >
+        <Link
+          style={{
+            textDecoration: "none",
+            color: "white",
+            background: (pathname==="/"||pathname==="/results")?color.primary[700]:"inherit",
+            padding: "10px",
+            borderRadius: "10px",
+          }}
+          href={"/"}
+        >
+          <Typography sx={{ color: color.greyAccent[100] }} variant="h4">
+            Practice
+          </Typography>
+        </Link>
+        <Link
+          style={{
+            textDecoration: "none",
+            color: "white",
+            background: (pathname==="/compete")?color.primary[700]:"inherit",
+            padding: "10px",
+            borderRadius: "10px",
+          }}
+          href={"/compete"}
+        >
+          <Typography sx={{ color: color.greyAccent[100] }} variant="h4">
+            Compete
+          </Typography>
+        </Link>
       </Box>
       <Box
         sx={{

@@ -1,111 +1,133 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { TypeContext } from "./TypeContext";
 import { Color } from "@/models/Letter";
 import { List } from "@mui/material";
 import Word from "@/models/Word";
 import io from "socket.io-client";
+import { Process } from "@/models/competeModel";
+import { Socket } from "socket.io-client";
+import { Participant, Room } from "@/models/Participant";
+import { useRouter } from "next/navigation";
 
 export interface CompeteContext {
-  results: Result[];
-  calculate: (time: number, DisplayTypeParagraph: Array<Word>) => void;
+  raceStarted: Process;
+  roomId: string;
+  createRoom: () => Promise<void>;
+  joinRoom: (userId: string, roomId: string) => Promise<void>;
+  currRoom: Room;
+  handleRaceData: (
+    time: number,
+    DisplayTypedParagraph: Array<Word>
+  ) => Promise<void>;
+  endRace: () => void;
 }
 
-const socket = io("http://localhost:8000");
-
 export const CompeteContext = createContext<CompeteContext>({
-  results: [],
-  calculate: (time: number, DisplayTypeParagraph: Array<Word>) => {},
+  raceStarted: Process.RACE_NOT_STARTED,
+  roomId: "",
+  createRoom: async () => {},
+  joinRoom: async (userId: string) => {},
+  currRoom: { total_participants: 0, participants: [] },
+  handleRaceData: async (
+    time: number,
+    DisplayTypedParagraph: Array<Word>
+  ) => {},
+  endRace: () => {},
 });
 
 const CompetitionProvider = ({ children }: { children: ReactNode }) => {
   const [results, setResults] = useState<Result[]>([]);
-
-  const createRoom = () => {
-    socket.emit("create_room", {
-      userId: sessionStorage.getItem("userId"),
-    });
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [currRoom, setCurrRoom] = useState<Room>({
+    total_participants: 0,
+    participants: [],
+  });
+  const [raceStarted, setRaceStarted] = useState<Process>(
+    Process.RACE_NOT_STARTED
+  );
+  const router = useRouter();
+  const [roomId, setRoomId] = useState<string>("");
+  useEffect(() => {
+    if (socket === null) {
+      setSocket(io("http://localhost:8000"));
+    }
+  }, [socket]);
+  const createRoom = async () => {
+    if (socket === null) return;
+    await socket.emit("create_room");
   };
 
-  const joinRoom = () => {
+  const joinRoom = async (userId: string, roomId: string) => {
+    if (socket === null) return;
     socket.emit("join_room", {
-      roomId: sessionStorage.getItem("roomId"),
-      userId: sessionStorage.getItem("userId"),
+      roomId: roomId,
+      name: userId,
     });
+    //
+  };
+  const handleRaceData = async (
+    time: number,
+    DisplayTypedParagraph: Array<Word>
+  ) => {
+    let green = 0;
+    DisplayTypedParagraph.forEach((word) => {
+      let flag: boolean = false;
+      word.forEach((letter) => {
+        if (letter.color !== Color.GREEN) {
+          flag = true;
+        }
+      });
+      if (!flag) {
+        green++;
+      }
+    });
+    const dataPacket = {
+      name: sessionStorage.getItem("userId") ?? "",
+      cw: green,
+      speed: green / time,
+      roomId: sessionStorage.getItem("roomId"),
+    };
+    socket?.emit("racing_currently", dataPacket);
   };
 
-  socket.on("get_room_id", (data) => {
+  const endRace = () => {
+    setRaceStarted(Process.RACE_ENDED);
+    router.push("/compete/result");
+  };
+  // socket event handlers
+  socket?.on("get_room_id", (data) => {
     sessionStorage.setItem("roomId", data.id);
+    setRoomId(data.id);
   });
 
-  socket.on("handle_error", (data) => {
+  socket?.on("handle_error", (data) => {
     alert(data.message);
   });
 
-  const calculate = (time: number, DisplayTypedParagraph: Array<Word>) => {
-    let green = 0;
-    let red = 0;
-    let maroon = 0;
-    let grey = 0;
-    let correctlyTypedChar = 0;
+  socket?.on("signal_start", (data) => {
+    console.log(data.message);
+    setRaceStarted(Process.RACE_STARTED);
+  });
 
-    for (const word of DisplayTypedParagraph) {
-      let flag = true;
-      let greenCount = 0;
-      for (const char of word) {
-        if (char.isCurrent) {
-          flag = false;
-          break;
-        }
-        switch (char.color) {
-          case Color.GREEN:
-            green++;
-            greenCount++;
-            break;
-          case Color.RED:
-            red++;
-            break;
-          case Color.GREY:
-            grey++;
-            break;
-          case Color.MAROON:
-            maroon++;
-            break;
-          default:
-            break;
-        }
-      }
-      if (flag && greenCount === word.length) {
-        correctlyTypedChar += word.length;
-        correctlyTypedChar++;
-        green++;
-      }
-    }
-    const Wpm = Math.round((correctlyTypedChar / (5 * time)) * 60);
-    const RawSpeed = Math.round(((red + green) / (5 * time)) * 60);
-    const CorrectChar = green;
-    const ExtraChar = maroon;
-    const IncorrectChar = red;
-    const MissedChar = grey;
-    const Accuracy = Math.round((green * 100) / (green + red + grey + maroon));
-
-    const item = {
-      time: time,
-      wpm: Wpm,
-      rawSpeed: RawSpeed,
-      correctChar: CorrectChar,
-      extraChar: ExtraChar,
-      incorrectChar: IncorrectChar,
-      missedChar: MissedChar,
-      accuracy: Accuracy,
-    roomId : sessionStorage.getItem("roomId"),
-    userId : sessionStorage.getItem("userId")
-    };
-    socket.emit("get_race_data", item);
-  };
+  socket?.on("room_info", (data) => {
+    setCurrRoom(data);
+    setRaceStarted(Process.RACE_INITIALIZING);
+  });
 
   const ContextValue = {
-    results,
-    calculate,
+    raceStarted,
+    roomId,
+    createRoom,
+    joinRoom,
+    currRoom,
+    handleRaceData,
+    endRace,
   };
 
   return (
