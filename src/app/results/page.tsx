@@ -15,7 +15,7 @@ const Page = () => {
     time = results?.map((result) => result?.time);
   }
 
-  console.log(x, y, time);
+ 
   const finalResult: Result =
     results.length != 0
       ? results[results.length - 1]

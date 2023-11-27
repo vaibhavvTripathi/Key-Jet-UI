@@ -22,9 +22,10 @@ function Type() {
   const [timeCount, setTimeCount] = useState<number>(0);
   const router = useRouter();
   const { calculate } = useContext(ResultContext);
-  
+
   useEffect(() => {
     if (!hasStarted) return;
+
     if (
       timeCount === 30 ||
       UserTypedParagraph.length > OriginalParagraph.length
@@ -39,9 +40,9 @@ function Type() {
     return () => clearInterval(interval);
   }, [hasStarted, timeCount]);
 
-
   const handleKeyStroke = (e: KeyboardEvent) => {
     if (hasStarted === false) setHasStarted(true);
+
     HandleKeyDown(e);
   };
   useEffect(() => {

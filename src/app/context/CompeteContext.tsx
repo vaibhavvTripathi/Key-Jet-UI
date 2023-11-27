@@ -97,8 +97,8 @@ const CompetitionProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const endRace = () => {
-    setRaceStarted(Process.RACE_ENDED);
     router.push("/compete/result");
+    setRaceStarted(Process.RACE_STARTED);
   };
   // socket event handlers
   socket?.on("get_room_id", (data) => {

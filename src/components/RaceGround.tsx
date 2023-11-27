@@ -13,6 +13,7 @@ import RealtimePlayerUpdates from "./RealtimePlayerUpdates";
 function RaceGround() {
   const { currRoom, handleRaceData, raceStarted, endRace } =
     useContext(CompeteContext);
+  const { calculate } = useContext(ResultContext);
   const {
     HandleKeyDown,
     UserTypedParagraph,
@@ -33,6 +34,8 @@ function RaceGround() {
     }
     const interval = setInterval(() => {
       handleRaceData(timeCount, DisplayTypedParagraph);
+
+      calculate(timeCount, DisplayTypedParagraph);
       setTimeCount((prev) => prev + 1);
     }, 1000);
     return () => clearInterval(interval);

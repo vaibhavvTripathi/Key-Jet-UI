@@ -1,7 +1,7 @@
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import BoltIcon from "@mui/icons-material/Bolt";
-import { sleep } from "../../utills/sleep";
+import { sleep } from "../utills/sleep";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import GroupsIcon from "@mui/icons-material/Groups";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -10,6 +10,8 @@ import Link from "next/link";
 import { useTheme } from "@mui/material";
 import { tokens } from "@/theme";
 import { usePathname, useRouter } from "next/navigation";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import { Tooltip } from "@mui/material";
 
 const Navbar = () => {
   const [isUnderline, setIsUnderline] = useState<boolean>(false);
@@ -72,7 +74,7 @@ const Navbar = () => {
       </Box>
       <Box
         sx={{
-          ml: 8,
+          ml: 4,
           borderRadius: "10px",
           display: "flex",
         }}
@@ -81,7 +83,10 @@ const Navbar = () => {
           style={{
             textDecoration: "none",
             color: "white",
-            background: (pathname==="/"||pathname==="/results")?color.primary[700]:"inherit",
+            background:
+              pathname === "/" || pathname === "/results"
+                ? color.primary[700]
+                : "inherit",
             padding: "10px",
             borderRadius: "10px",
           }}
@@ -95,7 +100,9 @@ const Navbar = () => {
           style={{
             textDecoration: "none",
             color: "white",
-            background: (pathname==="/compete")?color.primary[700]:"inherit",
+            background: pathname.startsWith("/compete")
+              ? color.primary[700]
+              : "inherit",
             padding: "10px",
             borderRadius: "10px",
           }}
@@ -115,15 +122,21 @@ const Navbar = () => {
           px: 1,
         }}
       >
-        <IconButton>
-          <SettingsIcon sx={{ color: "text3.light" }} />
-        </IconButton>
-        <IconButton>
-          <GroupsIcon sx={{ color: "text3.light" }} />
-        </IconButton>
-        <IconButton onClick={toggleColorMode}>
-          <DarkModeIcon sx={{ color: "text3.light" }} />
-        </IconButton>
+        <Tooltip title="Leaderboard">
+          <IconButton>
+            <GroupsIcon sx={{ color: "text3.light" }} />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip title="Mode">
+          <IconButton onClick={toggleColorMode}>
+            {theme.palette.mode === "dark" ? (
+              <LightModeIcon />
+            ) : (
+              <DarkModeIcon sx={{ color: "text3.light" }} />
+            )}
+          </IconButton>
+        </Tooltip>
       </Box>
     </Box>
   );

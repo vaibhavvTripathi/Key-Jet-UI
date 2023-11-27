@@ -14,6 +14,13 @@ export interface TypeContextType {
   HandleKeyDown: (e: KeyboardEvent) => void;
   HandleBackspace: () => void;
 }
+function isAlphabeticString(inputString: string) {
+  // Regular expression to match only alphabetic characters
+  const regex = /^[a-zA-Z]+$/;
+
+  // Test if the inputString matches the regex
+  return regex.test(inputString) && inputString.length==1;
+}
 
 export const TypeContext = createContext<TypeContextType>({
   OriginalParagraph: [[]],
@@ -65,7 +72,7 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   const HandleKeyDown = (e: KeyboardEvent) => {
     const keyInput: string = e.key;
-
+    
     if (keyInput === " ") {
       if (OriginalParagraph.length < UserTypedParagraph.length) {
         return;
@@ -97,13 +104,14 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
           }
         }
       );
-
+ 
       const newArray = [...updatedUserTypedParagraph, []];
       setUserTypedParagraph(newArray);
       updateDisplayParagraph(newArray);
-    } else if (keyInput === "Backspace") {
+    } 
+    else if (keyInput === "Backspace") {
       HandleBackspace();
-    } else if (keyInput !== "CapsLock" && keyInput !== "Shift") {
+    } else if (isAlphabeticString(keyInput)) {
       const updatedArray: Array<Array<Letter>> = UserTypedParagraph.map(
         (word, index) => {
           if (index === UserTypedParagraph.length - 1) {
@@ -232,6 +240,8 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
           });
           if (newWord.length != 0)
             updatedUserTypedParagraph = [...updatedUserTypedParagraph, newWord];
+          if (newWord.length === 0)
+            updatedUserTypedParagraph = [...updatedUserTypedParagraph, []];
         }
       }
     });

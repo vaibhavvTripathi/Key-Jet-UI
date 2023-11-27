@@ -22,6 +22,7 @@
     "chartjs-plugin-annotation": "^3.0.1",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.10",
+    "howler": "^2.2.4",
     "next": "13.4.10",
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
@@ -30,6 +31,7 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.0.2"
+    "@faker-js/faker": "^8.0.2",
+    "@types/howler": "^2.2.11"
   }
 }
