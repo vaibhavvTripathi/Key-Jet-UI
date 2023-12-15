@@ -26,6 +26,7 @@ export interface CompeteContext {
     DisplayTypedParagraph: Array<Word>
   ) => Promise<void>;
   endRace: () => void;
+  intitRace : () => void;
 }
 
 export const CompeteContext = createContext<CompeteContext>({
@@ -39,6 +40,7 @@ export const CompeteContext = createContext<CompeteContext>({
     DisplayTypedParagraph: Array<Word>
   ) => {},
   endRace: () => {},
+  intitRace : () => {}
 });
 
 const CompetitionProvider = ({ children }: { children: ReactNode }) => {
@@ -97,9 +99,14 @@ const CompetitionProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const endRace = () => {
+    setRaceStarted(Process.RACE_ENDED);
     router.push("/compete/result");
-    setRaceStarted(Process.RACE_STARTED);
+   
   };
+
+  const intitRace = () => {
+    setRaceStarted(Process.RACE_NOT_STARTED);
+  }
   // socket event handlers
   socket?.on("get_room_id", (data) => {
     sessionStorage.setItem("roomId", data.id);
@@ -128,6 +135,7 @@ const CompetitionProvider = ({ children }: { children: ReactNode }) => {
     currRoom,
     handleRaceData,
     endRace,
+    intitRace
   };
 
   return (

@@ -13,7 +13,7 @@ function Page() {
   const { raceStarted, roomId } = useContext(CompeteContext);
   return (
     <>
-      {raceStarted === Process.RACE_NOT_STARTED && <RaceGate />}
+      {(raceStarted === Process.RACE_NOT_STARTED) && <RaceGate />}
       {(raceStarted === Process.RACE_INITIALIZING || Process.RACE_STARTED) && (
         <RaceGround />
       )}

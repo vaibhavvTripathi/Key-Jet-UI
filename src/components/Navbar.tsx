@@ -38,7 +38,7 @@ const Navbar = () => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        mt: 10,
+        my: 5,
       }}
     >
       <Box

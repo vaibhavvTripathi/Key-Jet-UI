@@ -9,9 +9,10 @@ import React, { useContext, useEffect, useState } from "react";
 import WordVal from "./WordVal";
 import { CompeteContext } from "@/app/context/CompeteContext";
 import RealtimePlayerUpdates from "./RealtimePlayerUpdates";
+import { Process } from "@/models/competeModel";
 
 function RaceGround() {
-  const { currRoom, handleRaceData, raceStarted, endRace } =
+  const { currRoom, handleRaceData, raceStarted, endRace, intitRace } =
     useContext(CompeteContext);
   const { calculate } = useContext(ResultContext);
   const {
@@ -27,7 +28,12 @@ function RaceGround() {
   //   const { calculate } = useContext(ResultContext);
 
   useEffect(() => {
-    if (!hasStarted) return;
+    if (raceStarted === Process.RACE_ENDED) {
+      intitRace();
+    }
+  }, []);
+  useEffect(() => {
+    if (!hasStarted || raceStarted === Process.RACE_ENDED) return;
     if (timeCount === 30) {
       endRace();
       return;
