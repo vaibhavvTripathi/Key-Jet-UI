@@ -9,7 +9,7 @@ import React, { useContext, useEffect, useState } from "react";
 import WordVal from "./WordVal";
 import { CompeteContext } from "@/app/context/CompeteContext";
 import RealtimePlayerUpdates from "./RealtimePlayerUpdates";
-import { Process } from "@/models/competeModel";
+import { Process } from "@/models/CompeteModel";
 
 function RaceGround() {
   const { currRoom, handleRaceData, raceStarted, endRace, intitRace } =

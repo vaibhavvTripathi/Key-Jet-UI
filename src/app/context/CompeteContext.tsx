@@ -10,10 +10,10 @@ import { Color } from "@/models/Letter";
 import { List } from "@mui/material";
 import Word from "@/models/Word";
 import io from "socket.io-client";
-import { Process } from "@/models/competeModel";
 import { Socket } from "socket.io-client";
 import { Participant, Room } from "@/models/Participant";
 import { useRouter } from "next/navigation";
+import { Process } from "@/models/competeModel";
 
 export interface CompeteContext {
   raceStarted: Process;

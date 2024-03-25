@@ -1,5 +1,5 @@
 "use client";
-import { Compete } from "@/models/competeModel";
+import { Compete } from "@/models/CompeteModel";
 import { Button, Container, Paper } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import "chartjs-plugin-annotation";
