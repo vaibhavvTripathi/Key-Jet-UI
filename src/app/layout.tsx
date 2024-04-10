@@ -6,9 +6,12 @@ import TypeContextProvider from "./context/TypeContext";
 import ResultProvider from "./context/ResultContext";
 import { ColorModeContext, useMode } from "@/theme";
 import { Container, CssBaseline, ThemeProvider } from "@mui/material";
-import CompetitionProvider from "./context/CompeteContext";
 import Navbar from "@/components/Navbar";
+import { AuthContextProvider } from "./context/AuthContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "react-hot-toast";
 
+const queryClient = new QueryClient();
 export default function RootLayout({
   children,
 }: {
@@ -16,24 +19,28 @@ export default function RootLayout({
 }) {
   const [theme, colorMode] = useMode();
   return (
-    <TypeContextProvider>
-      <CompetitionProvider>
-        <ResultProvider>
-          <ColorModeContext.Provider value={colorMode}>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <html lang="en">
-                <body>
-                  <Container>
-                    <Navbar />
-                    {children}
-                  </Container>
-                </body>
-              </html>
-            </ThemeProvider>
-          </ColorModeContext.Provider>
-        </ResultProvider>
-      </CompetitionProvider>
-    </TypeContextProvider>
+    <AuthContextProvider>
+      <QueryClientProvider client={queryClient}>
+        {/* <Toaster/> */}
+        <ThemeProvider theme={theme}>
+          <TypeContextProvider>
+            <ResultProvider>
+              <ColorModeContext.Provider value={colorMode}>
+                <CssBaseline />
+                <html lang="en">
+                  <body>
+                    <Container>
+                      <Toaster/>
+                      <Navbar />
+                      {children}
+                    </Container>
+                  </body>
+                </html>
+              </ColorModeContext.Provider>
+            </ResultProvider>
+          </TypeContextProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </AuthContextProvider>
   );
 }

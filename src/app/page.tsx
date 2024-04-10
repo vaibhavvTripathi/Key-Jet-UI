@@ -11,12 +11,16 @@ import { useRouter } from "next/navigation";
 import { ColorModeContext } from "@/theme";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Type from "@/components/Type";
-import CompeteGraph from "@/components/CompeteGraph";
+
 
 export default function Home() {
+  const router = useRouter();
+  const handleFinishRace = () => {
+    router.push("/results");
+  };
   return (
     <>
-      <Type />
+      <Type handleFinishRace={handleFinishRace} />
     </>
   );
 }

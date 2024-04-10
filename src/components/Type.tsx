@@ -8,7 +8,10 @@ import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import WordVal from "./WordVal";
 
-function Type() {
+type TypePropsType = {
+  handleFinishRace: () => void;
+};
+function Type({ handleFinishRace }: TypePropsType) {
   const {
     HandleKeyDown,
     UserTypedParagraph,
@@ -30,7 +33,7 @@ function Type() {
       timeCount === 30 ||
       UserTypedParagraph.length > OriginalParagraph.length
     ) {
-      router.push("/results");
+      handleFinishRace();
       return;
     }
     const interval = setInterval(() => {
@@ -54,9 +57,6 @@ function Type() {
   }, [UserTypedParagraph]);
   return (
     <>
-      <Typography variant="h4" sx={{ textAlign: "center", mb: 3, mt: 10 }}>
-        Press Any Key to Start
-      </Typography>
       <Box
         sx={{
           display: "flex",
@@ -65,11 +65,14 @@ function Type() {
           flexWrap: "wrap",
           width: "70%",
           mx: "auto",
+          mt: 15,
         }}
       >
-        <Typography variant="h5" sx={{ color: "grey", fontWeight: 600 }}>
-          {timeCount}
-        </Typography>
+        {hasStarted && (
+          <Typography variant="h5" sx={{ color: "grey", fontWeight: 600 }}>
+            {timeCount}
+          </Typography>
+        )}
 
         <Box
           sx={{
@@ -87,6 +90,12 @@ function Type() {
           })}
         </Box>
       </Box>
+
+      {UserTypedParagraph[0].length === 0 && (
+        <Typography variant="h4" sx={{ textAlign: "center", mb: 3, mt: 10 }}>
+          Press Any Key to Start
+        </Typography>
+      )}
     </>
   );
 }

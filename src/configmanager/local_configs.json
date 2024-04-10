@@ -1,0 +1,6 @@
+{
+  "mode": 0,
+  "urlConfigs": {
+    "baseurl": "http://localhost:6969/api/v0.1"
+  }
+}
