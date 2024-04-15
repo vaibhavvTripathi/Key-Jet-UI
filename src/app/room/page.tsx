@@ -17,9 +17,15 @@ const Room = () => {
     Cookies.get("roomId")
   );
   const router = useRouter();
-  if (roomData?.currentStatus === RaceStatus.ENDED) {
-    router.push("/compete/results");
-  }
+  useEffect(() => {
+    if (roomData?.currentStatus === RaceStatus.ENDED) {
+      router.push("/compete/results");
+    }
+    if (roomData?.currentStatus === RaceStatus.DEPRECATED) {
+      router.push("/compete");
+    }
+  }, [roomData]);
+
   return (
     <>
       {roomData?.currentStatus === RaceStatus.INITIALISED && (
@@ -33,14 +39,16 @@ const Room = () => {
             }
           />
         )}
-      {roomData && roomData?.currentStatus === RaceStatus.STARTED && roomData.startTime && (
-        <StartCompetingScreen
-          timeLeft={
-            new Date().getTime() - new Date(roomData?.startTime).getTime()
-          }
-          playerInfo={roomData.players}
-        />
-      )}
+      {roomData &&
+        roomData?.currentStatus === RaceStatus.STARTED &&
+        roomData.startTime && (
+          <StartCompetingScreen
+            timeLeft={
+              new Date().getTime() - new Date(roomData?.startTime).getTime()
+            }
+            playerInfo={roomData.players}
+          />
+        )}
     </>
   );
 };
