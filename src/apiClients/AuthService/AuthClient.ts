@@ -18,7 +18,7 @@ export const AuthClient: IAuthClient = {
       ).data;
     } catch (err) {
       const status = handleAxiosError(err as AxiosError);
-      console.log(status);
+
       if (status === 404) {
         toast.error("User doesn't exists");
       } else {

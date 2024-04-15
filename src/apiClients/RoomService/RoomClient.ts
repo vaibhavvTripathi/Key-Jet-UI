@@ -23,7 +23,6 @@ export const RoomClient: IRoomClient = {
       } else if (status === 401) {
         toast.error("Please log in");
         Cookies.remove("token");
-        location.reload();
       } else {
         toast.error("Something went wrong please refresh");
       }
@@ -46,7 +45,6 @@ export const RoomClient: IRoomClient = {
       } else if (status === 401) {
         toast.error("Please log in");
         Cookies.remove("token");
-        location.reload();
       } else {
         toast.error("Something went wrong please refresh");
       }
@@ -66,7 +64,6 @@ export const RoomClient: IRoomClient = {
       } else if (status === 401) {
         toast.error("Please log in");
         Cookies.remove("token");
-        location.reload();
       } else {
         toast.error("Something went wrong please refresh");
       }
@@ -88,7 +85,6 @@ export const RoomClient: IRoomClient = {
       } else if (status === 401) {
         toast.error("Please log in");
         Cookies.remove("token");
-        location.reload();
       } else {
         toast.error("Something went wrong please refresh");
       }
@@ -116,7 +112,6 @@ export const RoomClient: IRoomClient = {
       } else if (status === 401) {
         toast.error("Please log in");
         Cookies.remove("token");
-        location.reload();
       } else {
         toast.error("Something went wrong please refresh");
       }

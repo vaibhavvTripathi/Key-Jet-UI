@@ -1,9 +1,7 @@
 "use client";
-import { Compete } from "@/models/CompeteModel";
 import { Button, Container, Paper } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import "chartjs-plugin-annotation";
-import CarPic from "../../Images/CarPic.png";
+
 
 import {
   Chart as ChartJS,
