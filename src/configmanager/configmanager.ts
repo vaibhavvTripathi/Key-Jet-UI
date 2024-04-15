@@ -1,4 +1,4 @@
-import localConfigs from "../configmanager/local_configs.json"
+import localConfigs from "../configmanager/global_configs.json"
 import { KeyjetConfigs } from "./configType"
 
 export const getConfigs = ()=> {
