@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
 import {
@@ -19,10 +19,15 @@ const Compete = () => {
   const { getToken } = useContext(AuthContext);
   const [newRoomId, setNewRoomId] = useState<string>("");
   const router = useRouter();
-  const token = getToken();
-  if (!token) {
-    router.push("/login");
-  }
+  const [token, setToken] = useState<string>("");
+  useEffect(() => {
+    const token = getToken();
+    if (!token) {
+      router.push("/login");
+      return;
+    }
+    setToken(token);
+  }, []);
 
   const { mutateAsync, isPending: disableCreateRoom } = useCreateRoom();
   const handleCreateRoom = async () => {
