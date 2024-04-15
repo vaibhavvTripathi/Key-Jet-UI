@@ -23,7 +23,7 @@ const StartCompetingScreen = ({
   const [counter, setCounter] = useState<number>(Math.floor(timeLeft / 1000));
   const router = useRouter();
   const handleFinishRace = () => {
-    router.push("/room/results");
+    router.push("/compete/results");
   };
   const { results } = useContext(ResultContext);
   const { getToken } = useContext(AuthContext);
