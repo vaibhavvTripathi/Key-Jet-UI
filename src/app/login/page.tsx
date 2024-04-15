@@ -14,17 +14,29 @@ import React from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useLogin } from "@/hooks/authHooks";
 import toast from "react-hot-toast";
+import { AxiosError } from "axios";
+import { handleAxiosError } from "@/utill";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
-  const { mutateAsync,isError } = useLogin();
-  if(isError) toast.error("Error in logging in")
+  const { mutateAsync, isError } = useLogin();
+  const router= useRouter();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    mutateAsync({
-      username: data.get("username") as string,
-      password: data.get("password") as string,
-    });
+    try {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      await mutateAsync({
+        username: data.get("username") as string,
+        password: data.get("password") as string,
+      });
+      router.push("/compete")
+    } catch (err) {
+      const status = handleAxiosError(err as AxiosError);
+      console.log(status)
+      if (status === 404) {
+        toast.error("User doesn't exists");
+      }
+    }
   };
   return (
     <Box

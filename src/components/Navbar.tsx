@@ -45,7 +45,9 @@ const Navbar = () => {
         sx={{
           display: "flex",
           alignItems: "center",
+          cursor: "pointer",
         }}
+        onClick={() => router.push("/")}
       >
         <BoltIcon
           sx={{
@@ -100,9 +102,10 @@ const Navbar = () => {
           style={{
             textDecoration: "none",
             color: "white",
-            background: pathname.startsWith("/compete")
-              ? color.primary[700]
-              : "inherit",
+            background:
+              pathname.startsWith("/compete") || pathname.startsWith("/room")
+                ? color.primary[700]
+                : "inherit",
             padding: "10px",
             borderRadius: "10px",
           }}
@@ -128,7 +131,7 @@ const Navbar = () => {
           </IconButton>
         </Tooltip>
 
-        <Tooltip title="Mode">
+        {/* <Tooltip title="Mode">
           <IconButton onClick={toggleColorMode}>
             {theme.palette.mode === "dark" ? (
               <LightModeIcon />
@@ -136,7 +139,7 @@ const Navbar = () => {
               <DarkModeIcon sx={{ color: "text3.light" }} />
             )}
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
       </Box>
     </Box>
   );

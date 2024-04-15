@@ -11,16 +11,23 @@ import { useRouter } from "next/navigation";
 import { ColorModeContext } from "@/theme";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Type from "@/components/Type";
-
+import WaitingForPatnerScreen from "@/components/WaitingForPatnerScreen";
+import IntermediateRaceScreen from "@/components/IntermediateRaceScreen";
+import CarComponent from "@/components/CarComponent";
 
 export default function Home() {
   const router = useRouter();
   const handleFinishRace = () => {
     router.push("/results");
   };
+  const { results } = useContext(ResultContext);
   return (
-    <>
-      <Type handleFinishRace={handleFinishRace} />
-    </>
+    <Box sx={{pt:10}}>
+      <Type
+        handleFinishRace={handleFinishRace}
+        initStart={false}
+        initialTimeCount={0}
+      />
+    </Box>
   );
 }

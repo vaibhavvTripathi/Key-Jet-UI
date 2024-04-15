@@ -5,7 +5,7 @@ import { createContext } from "react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import path from "path";
-const quote: string =
+export const quote: string =
   "become must head into order for should about lead find face stand never man when work day say against plan word time use general few through day up into hand you which there out which open under interest this still move little leave at it where";
 export interface TypeContextType {
   OriginalParagraph: Array<Word>;
@@ -40,9 +40,7 @@ const TypeContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   const pathname = usePathname();
 
-  useEffect(() => {
-    console.log("rendering");
-  }, [pathname]);
+
   console.log(UserTypedParagraph);
   // useEffect(()=> {setUserTypedParagraph()},[])
   function convertStringToLetterArray(inputString: string): Array<Word> {

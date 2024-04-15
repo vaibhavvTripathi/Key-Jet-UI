@@ -1,8 +1,15 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { TypeContext } from "./TypeContext";
 import { Color } from "@/models/Letter";
 import { List } from "@mui/material";
 import Word from "@/models/Word";
+import { usePathname } from "next/navigation";
 
 export interface ResultContext {
   results: Result[];
@@ -16,6 +23,11 @@ export const ResultContext = createContext<ResultContext>({
 
 const ResultProvider = ({ children }: { children: ReactNode }) => {
   const [results, setResults] = useState<Result[]>([]);
+
+  const pathname = usePathname();
+  useEffect(() => {
+    if (pathname === "/") setResults([]);
+  }, [pathname]);
   const calculate = (time: number, DisplayTypedParagraph: Array<Word>) => {
     let green = 0;
     let red = 0;
@@ -51,7 +63,7 @@ const ResultProvider = ({ children }: { children: ReactNode }) => {
       }
       if (flag && greenCount === word.length) {
         correctlyTypedChar += word.length;
-        correctlyTypedChar ++;
+        correctlyTypedChar++;
         green++;
       }
     }
@@ -73,7 +85,7 @@ const ResultProvider = ({ children }: { children: ReactNode }) => {
       missedChar: MissedChar,
       accuracy: Accuracy,
     };
-    if(time != 0) setResults([...results, item]);
+    if (time != 0) setResults([...results, item]);
   };
 
   const ContextValue = {

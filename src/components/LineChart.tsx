@@ -25,14 +25,16 @@ ChartJS.register(
 import { LineChart } from "@mui/x-charts/LineChart";
 import { Paper } from "@mui/material";
 type Props = {
-  wpm: Array<number>;
-  raw: Array<number>;
-  time: Array<number>;
+  line1: { val: Array<number>; label: string };
+  line2: { val: Array<number>; label: string };
+  x: { val: Array<number>; label: string };
+  y: string
 };
 export default function SimpleLineChart(props: Props) {
-  const wpm = props.wpm;
-  const raw = props.raw;
-  const time = props.time;
+  const line1 = props.line1.val;
+  const line2 = props.line2.val;
+  const x = props.x.val;
+  const y = props.y;
 
   const options = {
     responsive: true,
@@ -46,32 +48,32 @@ export default function SimpleLineChart(props: Props) {
         display: true,
         title: {
           display: true,
-          text: 'time'
-        }
+          text: props.x.label,
+        },
       },
       y: {
         display: true,
         title: {
           display: true,
-          text: 'words per minute'
-        }
-      }
-    }
+          text: y,
+        },
+      },
+    },
   };
 
-  const labels = time;
+  const labels = x;
   const data = {
     labels,
     datasets: [
       {
-        label: "wpm",
-        data: wpm,
+        label: props.line1.label,
+        data: line1,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
       {
-        label: "raw",
-        data: raw,
+        label: props.line2.label,
+        data: line2,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
@@ -79,17 +81,7 @@ export default function SimpleLineChart(props: Props) {
   };
   return (
     <>
-      {/* <Paper
-        elevation={2}
-        style={{
-          backgroundColor: "transparent",
-          padding: "1em",
-          margin: "auto",
-          position: "relative",
-        }}
-      > */}
       <Line options={options} data={data} />
-      {/* </Paper> */}
     </>
   );
 }

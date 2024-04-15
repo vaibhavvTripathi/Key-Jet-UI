@@ -10,8 +10,10 @@ import WordVal from "./WordVal";
 
 type TypePropsType = {
   handleFinishRace: () => void;
+  initialTimeCount : number;
+  initStart :boolean;
 };
-function Type({ handleFinishRace }: TypePropsType) {
+function Type({ handleFinishRace,initialTimeCount,initStart}: TypePropsType) {
   const {
     HandleKeyDown,
     UserTypedParagraph,
@@ -19,10 +21,8 @@ function Type({ handleFinishRace }: TypePropsType) {
     OriginalParagraph,
   } = useContext(TypeContext);
 
-  const { toggleColorMode } = useContext(ColorModeContext);
-
-  const [hasStarted, setHasStarted] = useState<boolean>(false);
-  const [timeCount, setTimeCount] = useState<number>(0);
+  const [hasStarted, setHasStarted] = useState<boolean>(initStart);
+  const [timeCount, setTimeCount] = useState<number>(initialTimeCount);
   const router = useRouter();
   const { calculate } = useContext(ResultContext);
 
@@ -65,12 +65,11 @@ function Type({ handleFinishRace }: TypePropsType) {
           flexWrap: "wrap",
           width: "70%",
           mx: "auto",
-          mt: 15,
         }}
       >
         {hasStarted && (
           <Typography variant="h5" sx={{ color: "grey", fontWeight: 600 }}>
-            {timeCount}
+            {30-timeCount}
           </Typography>
         )}
 
@@ -91,7 +90,7 @@ function Type({ handleFinishRace }: TypePropsType) {
         </Box>
       </Box>
 
-      {UserTypedParagraph[0].length === 0 && (
+      {!hasStarted && (
         <Typography variant="h4" sx={{ textAlign: "center", mb: 3, mt: 10 }}>
           Press Any Key to Start
         </Typography>

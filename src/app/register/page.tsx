@@ -14,17 +14,20 @@ import React from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useLogin, useRegister } from "@/hooks/authHooks";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
-  const { mutateAsync,isError} = useRegister();
-  if(isError) toast.error("user already exists ")
+  const { mutateAsync, isError } = useRegister();
+  const router = useRouter();
+  if (isError) toast.error("user already exists ");
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    mutateAsync({
+    await mutateAsync({
       username: data.get("username") as string,
       password: data.get("password") as string,
     });
+    router.push("/compete");
   };
   return (
     <Box

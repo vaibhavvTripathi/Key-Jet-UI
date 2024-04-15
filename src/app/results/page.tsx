@@ -3,6 +3,7 @@ import { Box, Container, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { ResultContext } from "../context/ResultContext";
 import SimpleLineChart from "../../components/LineChart";
+import { Label } from "@mui/icons-material";
 
 const Page = () => {
   const { results } = useContext(ResultContext);
@@ -15,7 +16,6 @@ const Page = () => {
     time = results?.map((result) => result?.time);
   }
 
- 
   const finalResult: Result =
     results.length != 0
       ? results[results.length - 1]
@@ -31,7 +31,7 @@ const Page = () => {
         };
 
   return (
-    <Container sx={{ display: "flex",mt:10}}>
+    <Container sx={{ display: "flex", mt: 10 }}>
       <Container
         sx={{
           display: "flex",
@@ -57,7 +57,12 @@ const Page = () => {
         </Box>
       </Container>
       <Container>
-        <SimpleLineChart wpm={x} raw={y} time={time} />
+        <SimpleLineChart
+          line1={{ val: x, label: "wpm" }}
+          line2={{ val: y, label: "raw" }}
+          x={{ val: time, label: "time" }}
+          y="speed"
+        />
         <Container
           sx={{
             display: "flex",
