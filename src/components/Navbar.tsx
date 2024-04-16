@@ -11,11 +11,15 @@ import { useTheme } from "@mui/material";
 import { tokens } from "@/theme";
 import { usePathname, useRouter } from "next/navigation";
 import LightModeIcon from "@mui/icons-material/LightMode";
+import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import MusicOffIcon from '@mui/icons-material/MusicOff';
 import { Tooltip } from "@mui/material";
+import { TypeContext } from "@/app/context/TypeContext";
 
 const Navbar = () => {
   const [isUnderline, setIsUnderline] = useState<boolean>(false);
   const { mode, toggleColorMode } = useContext(ColorModeContext);
+  const { KeyPressSound, ToggleKeyPressSound } = useContext(TypeContext);
   const theme = useTheme();
   const color = tokens(theme.palette.mode);
 
@@ -118,14 +122,24 @@ const Navbar = () => {
       </Box>
       <Box
         sx={{
-          mr: 10,
-          border: "1px solid ",
-          borderColor: "text3.light",
-          borderRadius: "10px",
+          mr: 8,
           px: 1,
         }}
       >
-        <Tooltip title="Leaderboard">
+        <Tooltip title="Music" sx={{ mx: 2 }}>
+          {KeyPressSound ? 
+          <IconButton onClick={() => ToggleKeyPressSound()}>
+            <MusicNoteIcon sx={{ color: "text3.light" }} />
+          </IconButton> : 
+          <IconButton onClick={() => ToggleKeyPressSound()}>
+            <MusicOffIcon sx={{ color: "text3.light" }} />
+          </IconButton>}
+        </Tooltip>
+        <Tooltip title="Leaderboard" sx={{
+          border: "1px solid ",
+          borderColor: "text3.light",
+          borderRadius: "10px",
+        }}>
           <IconButton>
             <GroupsIcon sx={{ color: "text3.light" }} />
           </IconButton>

@@ -45,7 +45,7 @@ function Type({ handleFinishRace,initialTimeCount,initStart}: TypePropsType) {
 
   const handleKeyStroke = (e: KeyboardEvent) => {
     if (hasStarted === false) setHasStarted(true);
-
+    
     HandleKeyDown(e);
   };
   useEffect(() => {
