@@ -15,19 +15,30 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useLogin, useRegister } from "@/hooks/authHooks";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { handleAxiosError } from "@/utill";
+import { AxiosError } from "axios";
 
 const Register = () => {
-  const { mutateAsync, isError } = useRegister();
+  const { mutateAsync, isError, isPending } = useRegister();
   const router = useRouter();
   if (isError) toast.error("user already exists ");
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    await mutateAsync({
-      username: data.get("username") as string,
-      password: data.get("password") as string,
-    });
-    router.push("/compete");
+    try {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      await mutateAsync({
+        username: data.get("username") as string,
+        password: data.get("password") as string,
+      });
+      toast.success("Registered in successfully")
+      router.push("/compete");
+    } catch (err) {
+      const status = handleAxiosError(err as AxiosError);
+      console.log(status);
+      if (status === 409) {
+        toast.error("User already exists");
+      } else toast.error("something went wrong");
+    }
   };
   return (
     <Box
@@ -74,6 +85,7 @@ const Register = () => {
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
+          disabled={isPending}
         >
           Register
         </Button>

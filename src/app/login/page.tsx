@@ -19,8 +19,8 @@ import { handleAxiosError } from "@/utill";
 import { useRouter } from "next/navigation";
 
 const Login = () => {
-  const { mutateAsync, isError } = useLogin();
-  const router= useRouter();
+  const { mutateAsync, isError, isPending } = useLogin();
+  const router = useRouter();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     try {
       event.preventDefault();
@@ -29,13 +29,15 @@ const Login = () => {
         username: data.get("username") as string,
         password: data.get("password") as string,
       });
-      router.push("/compete")
+      toast.success("Logged in successfully")
+      router.push("/compete");
+
     } catch (err) {
       const status = handleAxiosError(err as AxiosError);
-      console.log(status)
+      console.log(status);
       if (status === 404) {
         toast.error("User doesn't exists");
-      }
+      } else toast.error("something went wrong");
     }
   };
   return (
@@ -83,6 +85,7 @@ const Login = () => {
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
+          disabled={isPending}
         >
           Log In
         </Button>

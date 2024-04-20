@@ -68,7 +68,7 @@ function Type({ handleFinishRace,initialTimeCount,initStart}: TypePropsType) {
         }}
       >
         {hasStarted && (
-          <Typography variant="h5" sx={{ color: "grey", fontWeight: 600 }}>
+          <Typography variant="h5" sx={{ color: "grey", fontWeight: 500 }}>
             {30-timeCount}
           </Typography>
         )}

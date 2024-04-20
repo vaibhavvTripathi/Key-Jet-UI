@@ -12,10 +12,16 @@ import StartCompetingScreen from "@/components/StartCompetingScreen";
 import { useRouter } from "next/navigation";
 const Room = () => {
   const { getToken } = useContext(AuthContext);
-  const { data: roomData } = usePollRoomsAsync(
+  const { data: roomData, isError } = usePollRoomsAsync(
     getToken(),
     Cookies.get("roomId")
   );
+  useEffect(() => {
+    if (isError) {
+      toast.error("Something went wrong");
+      router.push("/");
+    }
+  }, [isError]);
   const router = useRouter();
   useEffect(() => {
     if (roomData?.currentStatus === RaceStatus.ENDED) {
