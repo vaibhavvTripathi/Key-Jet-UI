@@ -1,4 +1,3 @@
-// useKeyPressSound.ts
 import Customization from "@/models/Customization/Customization";
 import { useEffect } from "react";
 
