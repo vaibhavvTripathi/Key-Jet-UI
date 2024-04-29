@@ -10,6 +10,7 @@ import Navbar from "@/components/Navbar";
 import { AuthContextProvider } from "./context/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
+import CustomizeContextProvider from "./context/CustomizeContext";
 
 const queryClient = new QueryClient();
 export default function RootLayout({
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <AuthContextProvider>
       <QueryClientProvider client={queryClient}>
-        {/* <Toaster/> */}
+        <CustomizeContextProvider>
         <ThemeProvider theme={theme}>
           <TypeContextProvider>
             <ResultProvider>
@@ -40,6 +41,7 @@ export default function RootLayout({
             </ResultProvider>
           </TypeContextProvider>
         </ThemeProvider>
+        </CustomizeContextProvider>
       </QueryClientProvider>
     </AuthContextProvider>
   );

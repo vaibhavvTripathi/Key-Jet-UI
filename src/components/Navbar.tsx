@@ -11,127 +11,160 @@ import { useTheme } from "@mui/material";
 import { tokens } from "@/theme";
 import { usePathname, useRouter } from "next/navigation";
 import LightModeIcon from "@mui/icons-material/LightMode";
+import MusicNoteIcon from "@mui/icons-material/MusicNote";
+import MusicOffIcon from "@mui/icons-material/MusicOff";
 import { Tooltip } from "@mui/material";
+import { TypeContext } from "@/app/context/TypeContext";
+import { CustomizeContext } from "@/app/context/CustomizeContext";
 
 const Navbar = () => {
-  const [isUnderline, setIsUnderline] = useState<boolean>(false);
-  const { mode, toggleColorMode } = useContext(ColorModeContext);
-  const theme = useTheme();
-  const color = tokens(theme.palette.mode);
-
-  const router = useRouter();
-  const pathname = usePathname();
-  const name = "Key Jet";
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIsUnderline((prev) => !prev);
-    }, 350);
-
-    return () => {
-      clearInterval(timer);
+    const [isUnderline, setIsUnderline] = useState<boolean>(false);
+    const { mode, toggleColorMode } = useContext(ColorModeContext);
+    const { customization, updateCustomization } = useContext(CustomizeContext);
+    const theme = useTheme();
+    const color = tokens(theme.palette.mode);
+    const handleSoundToggle = () => {
+      customization.soundCustomization.soundOn = !customization.soundCustomization.soundOn;
+      updateCustomization(customization);
     };
-  }, [isUnderline]);
+    const router = useRouter();
+    const pathname = usePathname();
+    const name = "Key Jet";
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setIsUnderline((prev) => !prev);
+        }, 350);
 
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        my: 5,
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          cursor: "pointer",
-        }}
-        onClick={() => router.push("/")}
-      >
-        <BoltIcon
-          sx={{
-            fontSize: "2.5em",
-            color: "tex1.dark",
-            filter: "drop-shadow(0 0 5px) brightness(150%)",
-          }}
-        />
-        <Typography variant="h2" sx={{ fontFamily: "'Ubuntu', sans-serif" }}>
-          {name.split("").map((item, index) => {
-            return (
-              <span
-                key={index}
-                style={{
-                  textDecoration:
-                    isUnderline && index == name.length - 1
-                      ? "underline"
-                      : "none",
+        return () => {
+            clearInterval(timer);
+        };
+    }, [isUnderline]);
+
+    return (
+        <Box
+            sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                my: 5,
+            }}
+        >
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
                 }}
-              >
-                {item}
-              </span>
-            );
-          })}
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          ml: 4,
-          borderRadius: "10px",
-          display: "flex",
-        }}
-      >
-        <Link
-          style={{
-            textDecoration: "none",
-            color: "white",
-            background:
-              pathname === "/" || pathname === "/results"
-                ? color.primary[700]
-                : "inherit",
-            padding: "10px",
-            borderRadius: "10px",
-          }}
-          href={"/"}
-        >
-          <Typography sx={{ color: color.greyAccent[100] }} variant="h4">
-            Practice
-          </Typography>
-        </Link>
-        <Link
-          style={{
-            textDecoration: "none",
-            color: "white",
-            background:
-              pathname.startsWith("/compete") || pathname.startsWith("/room")
-                ? color.primary[700]
-                : "inherit",
-            padding: "10px",
-            borderRadius: "10px",
-          }}
-          href={"/compete"}
-        >
-          <Typography sx={{ color: color.greyAccent[100] }} variant="h4">
-            Compete
-          </Typography>
-        </Link>
-      </Box>
-      <Box
-        sx={{
-          mr: 10,
-          border: "1px solid ",
-          borderColor: "text3.light",
-          borderRadius: "10px",
-          px: 1,
-        }}
-      >
-        <Tooltip title="Leaderboard">
-          <IconButton>
-            <GroupsIcon sx={{ color: "text3.light" }} />
-          </IconButton>
-        </Tooltip>
+                onClick={() => router.push("/")}
+            >
+                <BoltIcon
+                    sx={{
+                        fontSize: "2.5em",
+                        color: "tex1.dark",
+                        filter: "drop-shadow(0 0 5px) brightness(150%)",
+                    }}
+                />
+                <Typography
+                    variant="h2"
+                    sx={{ fontFamily: "'Ubuntu', sans-serif" }}
+                >
+                    {name.split("").map((item, index) => {
+                        return (
+                            <span
+                                key={index}
+                                style={{
+                                    textDecoration:
+                                        isUnderline && index == name.length - 1
+                                            ? "underline"
+                                            : "none",
+                                }}
+                            >
+                                {item}
+                            </span>
+                        );
+                    })}
+                </Typography>
+            </Box>
+            <Box
+                sx={{
+                    ml: 4,
+                    borderRadius: "10px",
+                    display: "flex",
+                }}
+            >
+                <Link
+                    style={{
+                        textDecoration: "none",
+                        color: "white",
+                        background:
+                            pathname === "/" || pathname === "/results"
+                                ? color.primary[700]
+                                : "inherit",
+                        padding: "10px",
+                        borderRadius: "10px",
+                    }}
+                    href={"/"}
+                >
+                    <Typography
+                        sx={{ color: color.greyAccent[100] }}
+                        variant="h4"
+                    >
+                        Practice
+                    </Typography>
+                </Link>
+                <Link
+                    style={{
+                        textDecoration: "none",
+                        color: "white",
+                        background:
+                            pathname.startsWith("/compete") ||
+                            pathname.startsWith("/room")
+                                ? color.primary[700]
+                                : "inherit",
+                        padding: "10px",
+                        borderRadius: "10px",
+                    }}
+                    href={"/compete"}
+                >
+                    <Typography
+                        sx={{ color: color.greyAccent[100] }}
+                        variant="h4"
+                    >
+                        Compete
+                    </Typography>
+                </Link>
+            </Box>
+            <Box
+                sx={{
+                    mr: 8,
+                    px: 1,
+                }}
+            >
+                <Tooltip title="Music" sx={{ mx: 2 }}>
+                    {customization.soundCustomization.soundOn ? (
+                        <IconButton onClick={() => handleSoundToggle()}>
+                            <MusicNoteIcon sx={{ color: "text3.light" }} />
+                        </IconButton>
+                    ) : (
+                        <IconButton onClick={() => handleSoundToggle()}>
+                            <MusicOffIcon sx={{ color: "text3.light" }} />
+                        </IconButton>
+                    )}
+                </Tooltip>
+                <Tooltip
+                    title="Leaderboard"
+                    sx={{
+                        border: "1px solid ",
+                        borderColor: "text3.light",
+                        borderRadius: "10px",
+                    }}
+                >
+                    <IconButton>
+                        <GroupsIcon sx={{ color: "text3.light" }} />
+                    </IconButton>
+                </Tooltip>
 
-        {/* <Tooltip title="Mode">
+                {/* <Tooltip title="Mode">
           <IconButton onClick={toggleColorMode}>
             {theme.palette.mode === "dark" ? (
               <LightModeIcon />
@@ -140,9 +173,9 @@ const Navbar = () => {
             )}
           </IconButton>
         </Tooltip> */}
-      </Box>
-    </Box>
-  );
+            </Box>
+        </Box>
+    );
 };
 
 export default Navbar;
