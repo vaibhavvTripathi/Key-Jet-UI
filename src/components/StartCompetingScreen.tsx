@@ -53,23 +53,15 @@ const StartCompetingScreen = ({
                 gap: 2,
                 width: "800px",
                 mx: "auto",
+                flexDirection: "column",
               }}
             >
+              <Typography variant="h6" sx={{ textAlign: "center" }}>
+                {item.username}
+              </Typography>
               <CarComponent
                 result={item.performance[item.performance.length - 1]}
               />
-              <Typography
-                sx={{
-                  transform:
-                    "rotate(-40deg)" /* Use negative angle to rotate counter-clockwise */,
-                  transformOrigin:
-                    "bottom" /* Set the rotation origin to the bottom */,
-                  whiteSpace: "nowrap" /* Prevent text wrapping */,
-                }}
-                variant="h6"
-              >
-                {item.username}
-              </Typography>
             </Box>
           );
         })}
