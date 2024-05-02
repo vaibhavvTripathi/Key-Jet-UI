@@ -2,10 +2,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
+import SendIcon from '@mui/icons-material/Send';
 import {
   Box,
   Button,
   Container,
+  IconButton,
   Paper,
   TextField,
   Typography,
@@ -58,20 +60,21 @@ const Compete = () => {
           p: 5,
           borderRadius: "20px",
           border: "1px solid grey",
+          width: '40%'
         }}
       >
         <Typography variant="h3" sx={{ textAlign: "center" }}>
           Enter a new room
         </Typography>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+        <Box sx={{ display: "flex", flexDirection: "row", gap: 2, justifyContent: 'center', padding: '1em' }}>
           <TextField
             onChange={(e) => setNewRoomId(e.target.value)}
             value={newRoomId}
             label="Enter Room Id"
           />
-          <Button onClick={handleEnterRoom} variant="contained">
-            Enter a Room
-          </Button>
+          <IconButton onClick={handleEnterRoom} sx={{width: '2.4em'}}>
+            <SendIcon />
+          </IconButton>
         </Box>
 
         <Divider />
@@ -79,6 +82,7 @@ const Compete = () => {
           onClick={handleCreateRoom}
           variant="contained"
           disabled={disableCreateRoom}
+          sx={{margin: '1em', borderRadius: '8px', height: '4em'}}
         >
           + Create a room
         </Button>
