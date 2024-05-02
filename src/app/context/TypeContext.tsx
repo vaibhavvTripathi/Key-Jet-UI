@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import path from "path";
 export const quote: string =
-  "become must head into order for should about lead find face stand never man when work day say against plan word time use general few through day up into hand you which there out which open under interest this still move little leave at it where";
+  "after it there well against show down think say that after some consider well must after you some fact again write those life run give we would place want ask might who no down that the order interest write";
 export interface TypeContextType {
   OriginalParagraph: Array<Word>;
   UserTypedParagraph: Array<Word>;
