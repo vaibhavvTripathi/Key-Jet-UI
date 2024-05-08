@@ -29,9 +29,7 @@ const Login = () => {
         username: data.get("username") as string,
         password: data.get("password") as string,
       });
-      toast.success("Logged in successfully")
       router.push("/compete");
-
     } catch (err) {
       const status = handleAxiosError(err as AxiosError);
       console.log(status);

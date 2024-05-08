@@ -40,18 +40,20 @@ const Room = () => {
       {roomData?.currentStatus === RaceStatus.INTERMEDIATE &&
         roomData.startTime && (
           <IntermediateRaceScreen
-            timeLeft={
-              new Date(roomData?.startTime).getTime() - new Date().getTime()
-            }
+            timeLeft={Math.max(
+              new Date(roomData?.startTime).getTime() - new Date().getTime(),
+              0
+            )}
           />
         )}
       {roomData &&
         roomData?.currentStatus === RaceStatus.STARTED &&
         roomData.startTime && (
           <StartCompetingScreen
-            timeLeft={
+            timeLeft={Math.max(
+              0,
               new Date().getTime() - new Date(roomData?.startTime).getTime()
-            }
+            )}
             playerInfo={roomData.players}
           />
         )}

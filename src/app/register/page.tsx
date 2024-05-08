@@ -30,7 +30,6 @@ const Register = () => {
         username: data.get("username") as string,
         password: data.get("password") as string,
       });
-      toast.success("Registered in successfully")
       router.push("/compete");
     } catch (err) {
       const status = handleAxiosError(err as AxiosError);
