@@ -71,6 +71,7 @@ const StartCompetingScreen = ({
         handleFinishRace={handleFinishRace}
         initStart={true}
         initialTimeCount={Math.floor(timeLeft / 1000)}
+        allowToFinish={true}
       />
     </>
   );
